@@ -6,12 +6,9 @@ load_dotenv()
 
 CROSSREFAPI = "https://api.crossref.org/works/"
 
-def get_wiley(DOI,filename=None,scrape_url=None):
+def get_wiley(DOI,filename,scrape_url=None):
     #Should try to pass in download link from crossref api,
-
-    if filename == None:
-        filename = re.sub(r'[^a-zA-Z0-9]', '', doi) #Just makes the DOI the name without the special characters, if no name passed in
-
+    print("Downloading from wiley...")
     if scrape_url == None:
         #Call crossref api to determine the download url.
         try:

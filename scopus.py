@@ -28,7 +28,7 @@ def get_scopus_urls(keywords):
 
 
 if __name__ == "__main__":
-    keywords = ["heart","brain"]
+    keywords = ["superconductor","temperature"]
     results = get_scopus_urls(keywords)
     if results == -1:
         print(f"Failed to get DOI's from {keywords}")

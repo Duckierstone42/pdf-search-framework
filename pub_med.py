@@ -8,12 +8,11 @@ DOI_TO_PMID_URL = f"https://www.ncbi.nlm.nih.gov/pmc/utils/idconv/v1.0/?tool=LLM
 PMID_TO_FULL_TEXT_URL = "https://www.ncbi.nlm.nih.gov/research/bionlp/RESTful/pmcoa.cgi/BioC_json"
 
 
-def get_pub_med(DOI, filename= None):
-    if filename == None:
-        filename = re.sub(r'[^a-zA-Z0-9]', '', DOI) #Just makes the DOI the name without the special characters
+def get_pub_med(DOI, filename):
     #Call two URLS, one to get PMID then one to download given pmid.
+    print("Downloading from pub med...")
     try:
-        records = requests.get(DOI_TO_PMID_URL + f"&ids={doi}")
+        records = requests.get(DOI_TO_PMID_URL + f"&ids={DOI}")
         if records.status_code != 200:
             print(f"Failed to find DOI {DOI}")
             return -1

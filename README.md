@@ -20,3 +20,5 @@ any of the API's fail it should go straight to the last method of download via h
 
 Define an EMAIL, WILEY_KEY, and ELSEVIER_KEY in a .env folder. The WILEY_KEY and ELSEVIER_KEY represent API keys from
 those respective publishers.
+
+Also, you may need to create a downloads folder before running any of the individual functions

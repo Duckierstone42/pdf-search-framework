@@ -15,10 +15,13 @@ def get_metadata(DOI):
                 return -1
         metadata = metadata.json()
         return_dict= {}
-        return_dict["publisher"] = metadata["message"]["publisher"]
-        return_dict["abstract"] = metadata["message"]["abstract"]
-        return_dict["authors"] = [author["given"] for author in metadata["message"]["author"]]
-        return_dict["citation_count"] = metadata["message"]["reference-count"]
+        return_dict["publisher"] = metadata["message"]["publisher"] #This one is kinda needed.
+        if "abstract" in metadata["message"]:
+            return_dict["abstract"] = metadata["message"]["abstract"]
+        if "author" in metadata["message"]:
+            return_dict["authors"] = [author["given"] for author in metadata["message"]["author"]]
+        if "reference-count" in metadata["message"]:
+            return_dict["citation_count"] = metadata["message"]["reference-count"]
         return return_dict
     except Exception as e:
         print(f"Error occured: {e}")

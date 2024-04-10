@@ -2,7 +2,7 @@ import re
 from selenium import webdriver
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
-
+import time
 import os
 
 DOI_URL = "http://doi.org/"
@@ -14,6 +14,13 @@ def get_pdf_scraping(DOI,driver,filename=None):
     doi_url = DOI_URL + DOI
     #First need to get the URLL via DOI redirct.    
     #I need a driver to both find the URL link 
+    pdf_link = get_pdf_link(doi_url)
+    if (pdf_link == -1):
+        return -1
+    #Need to install into a temp directory for web_scraping, due to the manner it is run in can't be sure if it actually
+    #got downloaded or not.
+    driver.get(pdf_link)
+    #Define a unique temp directory
 
 
 def create_driver(download_directory):

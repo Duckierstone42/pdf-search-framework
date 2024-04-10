@@ -5,17 +5,15 @@ import re
 load_dotenv()
 SCIENCE_DIRECT_URL = "https://api.elsevier.com/content/article/doi/"
 
-def get_science_direct(DOI,filename = None):
-
-    #We can't use the DOI as a filename, since it contains illegal characters.
+def get_science_direct(DOI,filename):
+    print("Downloading from science direct...")
+    #We can't use   the DOI as a filename, since it contains illegal characters.
     specific_url = SCIENCE_DIRECT_URL + DOI
     headers = {
         "Accept": "application/pdf",
         "X-ELS-APIKey": os.environ["ELSEVIER_KEY"]
     }
     response = requests.get(specific_url, headers=headers)
-    if filename == None:
-        filename = re.sub(r'[^a-zA-Z0-9]', '', doi) #Just makes the DOI the name without the special characters
     if response.status_code == 200:
         with open(f"downloads/{filename}.pdf","wb") as f:
             f.write(response.content)
