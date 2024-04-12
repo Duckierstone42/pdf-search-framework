@@ -7,9 +7,9 @@ SCOPUS_URL = "http://api.elsevier.com/content/search/scopus"
 
 #Can later be expanded to return more than just DOI's, but other assosciated metadata. For now it just returns a list of DOIs.
 #Also for now just ands together keywords. In the future should brainstorm otherways of searching.
-def get_scopus_urls(keywords):
+def get_scopus_dois(keywords):
     keyword_string = "KEY(" + " AND ".join(keywords) + ")" 
-
+ 
     params = {"query": keyword_string}
 
     headers = {"X-ELS-APIKey":os.environ["ELSEVIER_KEY"]
@@ -29,8 +29,8 @@ def get_scopus_urls(keywords):
 
 if __name__ == "__main__":
     keywords = ["superconductor","temperature"]
-    results = get_scopus_urls(keywords)
+    results = get_scopus_dois(keywords)
     if results == -1:
         print(f"Failed to get DOI's from {keywords}")
     else:
-        print(f"Succesfully retrieved DOI's. Here are a couple: {results[:10]}")
+        print(f"Succesfully retrieved {len(results)} DOI's, here are a couple of them: {results[:5]}")
