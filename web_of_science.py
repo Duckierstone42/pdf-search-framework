@@ -9,13 +9,14 @@ def get_wos_dois(keywords):
     #Note it appears that the keywords are anded together, so perhaps seperate API calls should occur if I wish to OR them
     headers = {"X-ApiKey": os.environ["CLARIVATE_KEY"]}
     query = "TS=(" + ",".join(keywords)+")"
-    params = {"databaseId": "WOK", "count": "100","firstRecord":"1","usrQuery":query}
+    params = {"databaseId": "WOK", "count": 100,"firstRecord":1,"usrQuery":query}
 
     results = requests.get(WOS_LITE_URL,headers=headers,params=params)
     if (results.status_code != 200):
         print("Something went wrong with the WOS API request")
         return -1
     #Quite a few entries don't have a DOI assosciated with them, so I will just skip those for now.
+    #If records found is greater than 100, call the API again with the firstRecord set to 101.
     results =results.json()
     data = results["Data"]
     DOIs = []
