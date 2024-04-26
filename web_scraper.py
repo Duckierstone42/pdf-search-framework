@@ -24,8 +24,11 @@ def get_pdf_scraping(DOI,driver,download_directory,filename=None):
     time.sleep(5)
     next = len(os.listdir(download_directory))
     if (next > prev):
+        print(f"Successfully to scraped {DOI}")
         return 1
     else:
+        print(f"Failed to scrape {DOI}")
+
         return -1
     #For now assume it's single threaded, and nothing else is downloading to this directory at the same exact time.
     #Define a unique temp directory, so as to ensure file doesn
