@@ -24,9 +24,9 @@ def download_doi(DOI,filename=None):
         #Try pub_med API. 
         result = get_pub_med(DOI,filename)
         if (result == -1):
-            return -1
-        
+            return 0
         #I should also try to integrate general web-scraping API (as a last measure), but thats for later.
+        #Integrate web-scraping component here. For now, give it its own temp directory.
     return 0
 if __name__ == "__main__":
     doi = "10.1016/0925-8388(92)90625-J" 

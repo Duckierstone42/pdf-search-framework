@@ -8,19 +8,28 @@ import os
 DOI_URL = "http://doi.org/"
 #Last case, if no API's work, simply use a headless chrome_browser. 
 #Headless chromebrowsers take time and must be recycled, so one must be passed in, and returned by this function.
-def get_pdf_scraping(DOI,driver,filename=None):
+def get_pdf_scraping(DOI,driver,download_directory,filename=None):
     if filename == None:
         filename = re.sub(r'[^a-zA-Z0-9]', '', DOI) #Just makes the DOI the name without the special characters
     doi_url = DOI_URL + DOI
     #First need to get the URLL via DOI redirct.    
     #I need a driver to both find the URL link 
-    pdf_link = get_pdf_link(doi_url)
+    pdf_link = get_pdf_link(doi_url,driver)
     if (pdf_link == -1):
         return -1
     #Need to install into a temp directory for web_scraping, due to the manner it is run in can't be sure if it actually
     #got downloaded or not.
+    prev = len(os.listdir(download_directory))
     driver.get(pdf_link)
-    #Define a unique temp directory
+    time.sleep(5)
+    next = len(os.listdir(download_directory))
+    if (next > prev):
+        return 1
+    else:
+        return -1
+    #For now assume it's single threaded, and nothing else is downloading to this directory at the same exact time.
+    #Define a unique temp directory, so as to ensure file doesn
+    #Download into a temp directory, then move into downloads directory. This ensures we know what we're looking at.
 
 
 def create_driver(download_directory):
@@ -72,12 +81,13 @@ def get_pdf_link(doi,driver):
     else:
         return pdf_links[0]
 
-
 if __name__ == "__main__":
     download_directory = os.path.join(os.getcwd(),"downloads")
+    #Create temp directory here?.
+
     driver = create_driver(download_directory) #Where it automatically downloads pdf.
     doi = "10.1186/s12871-024-02492-y"
-    result = get_pdf_link(doi,driver)
+    result = get_pdf_scraping(doi,driver,download_directory,filename="1239")
     if (result == -1):
         print(f"Failed to download {doi}")
     else:
